@@ -69,8 +69,8 @@ jobs:
             sudo docker rm -f haksamo-dev
             sudo docker pull redis
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
-            docker run -d -p 6379:6379 --network lockermanager-network --name redis redis
-            docker run -d -p 8081:8081 --network lockermanager-network --name haksamo-dev jaepyo99/haksamo
+            docker run -d -p 6379:6379 --name redis redis
+            docker run -d -p 8081:8081 --name haksamo-dev jaepyo99/haksamo
             docker image prune -f
 
   current-time:
