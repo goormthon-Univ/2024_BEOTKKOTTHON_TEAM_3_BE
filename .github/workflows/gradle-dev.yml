@@ -34,7 +34,7 @@ jobs:
           mkdir ./src/main/resources 
           cd ./src/main/resources # resources 폴더로 이동
           touch ./application-dev.yml # application.yml 생성
-          echo "${{ secrets.APPLICATION-DEV }}" > ./application-dev.yml # github actions에서 설정한 값을 application.yml 파일에 쓰기
+          echo "${{ secrets.APPLICATION_DEV }}" > ./application-dev.yml # github actions에서 설정한 값을 application.yml 파일에 쓰기
 
         shell: bash
 
@@ -66,11 +66,11 @@ jobs:
           envs: GITHUB_SHA
           script: |
             sudo docker rm -f redis
-            sudo docker rm -f ime-dev
+            sudo docker rm -f haksamo-dev
             sudo docker pull redis
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/${{ secrets.PROJECT_NAME }}
             docker run -d -p 6379:6379 --network lockermanager-network --name redis redis
-            docker run -d -p 8083:8083 --network lockermanager-network --name ime-dev jaepyo99/lockermanager
+            docker run -d -p 8081:8081 --network lockermanager-network --name haksamo-dev jaepyo99/haksamo
             docker image prune -f
 
   current-time:
