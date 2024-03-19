@@ -4,8 +4,8 @@ import com.univ.haksamo.domain.bookmark.entity.UserKeword;
 import com.univ.haksamo.domain.bookmark.repository.UserKeywordRepository;
 import com.univ.haksamo.domain.keyword.entity.Keyword;
 import com.univ.haksamo.domain.keyword.repository.KeywordRepository;
-import com.univ.haksamo.domain.keyword.service.res.KeywordSelectionDto;
 import com.univ.haksamo.domain.keyword.service.res.SelectedKeywordDTO;
+import com.univ.haksamo.domain.keyword.service.res.UserKeywordsDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ public class KeywordReadService {
         return keywordRepository.findAll();
     }
 
-    public List<SelectedKeywordDTO> getUserKeywords(Long userId) {
+    public UserKeywordsDto getUserKeywords(Long userId) {
         List<SelectedKeywordDTO> selectedKeywords = new ArrayList<>();
         List<UserKeword> userKewords = userKeywordRepository.findAllByUserId(userId);
         List<Keyword> keywords = getKeywords();
@@ -45,6 +45,8 @@ public class KeywordReadService {
             }
         }
 
-        return selectedKeywords;
+        return UserKeywordsDto.builder()
+                .keywords(selectedKeywords)
+                .build();
     }
 }
