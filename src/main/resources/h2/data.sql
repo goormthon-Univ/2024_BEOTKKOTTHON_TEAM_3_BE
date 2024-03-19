@@ -1,0 +1,1 @@
+insert into USER_TABLE (id,name,password,fcmtoken,email,univId,role) VALUES ();

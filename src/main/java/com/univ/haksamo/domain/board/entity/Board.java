@@ -1,6 +1,6 @@
 package com.univ.haksamo.domain.board.entity;
 
-import com.univ.haksamo.domain.organization.entity.Organization;
+import com.univ.haksamo.domain.group.entity.Group;
 import com.univ.haksamo.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
 
@@ -17,5 +17,5 @@ public class Board extends BaseTimeEntity {
 
     @ManyToOne
     @JoinColumn(name = "organId")
-    private Organization organization;
+    private Group group;
 }

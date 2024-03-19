@@ -21,5 +21,5 @@ public class User extends BaseTimeEntity {
     private String fcmToken;
     private String email;
     private Role role;
-
+    private String password;
 }
