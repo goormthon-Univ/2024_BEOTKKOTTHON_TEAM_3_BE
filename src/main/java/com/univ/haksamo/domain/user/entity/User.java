@@ -20,6 +20,7 @@ public class User extends BaseTimeEntity {
     private String name;
     private String fcmToken;
     private String email;
+    @Enumerated(EnumType.STRING)
     private Role role;
-
+    private String password;
 }

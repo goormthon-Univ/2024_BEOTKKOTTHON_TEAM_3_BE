@@ -1,14 +1,16 @@
-package com.univ.haksamo.domain.organization.entity;
+package com.univ.haksamo.domain.group.entity;
 
 import com.univ.haksamo.domain.university.entity.University;
 import com.univ.haksamo.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
-@Table(name = "ORGANIZATION_TABLE")
-public class Organization extends BaseTimeEntity {
+@Getter
+@Table(name = "GROUP_TABLE")
+public class Group extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;

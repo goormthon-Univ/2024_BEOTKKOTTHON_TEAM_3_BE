@@ -1,13 +1,15 @@
 package com.univ.haksamo.domain.bookmark.entity;
 
-import com.univ.haksamo.domain.organization.entity.Organization;
+import com.univ.haksamo.domain.group.entity.Group;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 @Entity
-@Table(name = "USERORGANIZATION_TABLE")
-public class UserOrganization extends BaseTimeEntity {
+@Getter
+@Table(name = "USER_GROUP_TABLE")
+public class UserGroup extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -16,7 +18,7 @@ public class UserOrganization extends BaseTimeEntity {
     @JoinColumn(name = "userId")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organId")
-    private Organization organization;
+    private Group group;
 }
