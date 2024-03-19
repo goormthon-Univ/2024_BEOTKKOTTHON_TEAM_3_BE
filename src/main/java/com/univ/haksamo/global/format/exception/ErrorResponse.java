@@ -1,7 +1,6 @@
 package com.univ.haksamo.global.format.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.ime.lockmanager.common.format.exception.valid.errorcode.ValidErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
