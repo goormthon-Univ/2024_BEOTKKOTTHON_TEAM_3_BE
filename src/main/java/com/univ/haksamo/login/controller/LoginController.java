@@ -1,5 +1,6 @@
 package com.univ.haksamo.login.controller;
 
+import com.univ.haksamo.login.dto.AuthnMailDto;
 import com.univ.haksamo.login.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,14 @@ public class LoginController {
 
     @PostMapping("/haksamo/authn/email")
     @ResponseBody
-    public void mail(@RequestBody Map<String, String> email) {
+    public void sendAuthnMailController(@RequestBody Map<String, String> email) {
         loginService.send(email.get("email"));
     }
+
+    @PostMapping("/haksamo/authn/email/check")
+    @ResponseBody
+    public boolean authnCodeCheckController(@RequestBody AuthnMailDto authnMailDto) {
+        return loginService.checkEmailAuthn(authnMailDto);
+    }
+
 }
