@@ -16,8 +16,8 @@ import java.util.List;
 public class BoardWriteController {
 
     private final BoardWriteService boardWriteService;
-    @PostMapping("/group/{groupId}/boards")
-    public SuccessResponse write(@PathVariable Long groupId,
+    @PostMapping("/groups/{groupId}/boards")
+    public SuccessResponse<String> write(@PathVariable Long groupId,
                                  @RequestPart List<MultipartFile> images,
                                  @RequestPart WriteBoardRequestDto requestDto) throws IOException {
         boardWriteService.writeBoard(groupId,images,requestDto);
