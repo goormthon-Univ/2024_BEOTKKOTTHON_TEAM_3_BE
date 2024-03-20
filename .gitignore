@@ -9,7 +9,7 @@ application-dev.yml
 application-prod.yml
 application-local.yml
 **/firebase/firebase_service_key.json
-
+**/src/main/generated/
 ### STS ###
 .apt_generated
 .classpath

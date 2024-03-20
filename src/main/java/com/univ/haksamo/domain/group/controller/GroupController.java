@@ -23,7 +23,7 @@ public class GroupController {
     }
 
 
-    @GetMapping("/university/{universityId}/groups")
+    @GetMapping("/universities/{universityId}/groups")
     public SuccessResponse<GroupsInUnivDto>groupsInUniv(@PathVariable Long universityId){
         return new SuccessResponse<>(groupReadService.findGroupsInUniv(universityId));
     }
