@@ -3,11 +3,13 @@ package com.univ.haksamo.domain.user.entity;
 import com.univ.haksamo.domain.university.entity.University;
 import com.univ.haksamo.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Entity
 @Table(name = "USER_TABLE")
+@Getter
 public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
