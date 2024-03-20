@@ -1,8 +1,12 @@
 package com.univ.haksamo.login.controller;
 
+import com.univ.haksamo.domain.user.dto.UserDto;
+import com.univ.haksamo.jwt.TokenDto;
+import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
 import com.univ.haksamo.login.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +34,18 @@ public class LoginController {
     @ResponseBody
     public boolean authnCodeCheckController(@RequestBody AuthnMailDto authnMailDto) {
         return loginService.checkEmailAuthn(authnMailDto);
+    }
+
+    @PostMapping("/haksamo/authn/login")
+    @ResponseBody
+    public ResponseEntity<TokenDto> login(@RequestBody UserDto userDto) {
+        return ResponseEntity.ok(loginService.login(userDto));
+    }
+
+    @PostMapping("/haksamo/authn/reissue")
+    @ResponseBody
+    public ResponseEntity<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+        return ResponseEntity.ok(loginService.reissue(tokenRequestDto));
     }
 
 }

@@ -5,6 +5,7 @@ import com.univ.haksamo.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @Getter
 @Builder
@@ -37,5 +38,9 @@ public class UserDto {
                 .password(entity.getPassword())
                 .univName(univName)
                 .build();
+    }
+
+    public UsernamePasswordAuthenticationToken toAuthentication() {
+        return new UsernamePasswordAuthenticationToken(email, password);
     }
 }
