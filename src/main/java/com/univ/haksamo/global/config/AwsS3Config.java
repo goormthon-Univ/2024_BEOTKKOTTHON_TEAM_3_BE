@@ -1,4 +1,4 @@
-package com.univ.haksamo.domain.common.config;
+package com.univ.haksamo.global.config;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
