@@ -1,5 +1,6 @@
 package com.univ.haksamo.domain.group.controller;
 
+import com.univ.haksamo.domain.group.controller.res.GroupsInUnivDto;
 import com.univ.haksamo.domain.group.service.GroupReadService;
 import com.univ.haksamo.domain.group.service.res.UserGroupsInfoDto;
 import com.univ.haksamo.global.format.success.SuccessResponse;
@@ -19,5 +20,11 @@ public class GroupController {
     public SuccessResponse<UserGroupsInfoDto> userGroupList(@PathVariable Long userId){
         UserGroupsInfoDto userGroups = groupReadService.findUserGroups(userId);
         return new SuccessResponse<>(userGroups);
+    }
+
+
+    @GetMapping("/universities/{universityId}/groups")
+    public SuccessResponse<GroupsInUnivDto>groupsInUniv(@PathVariable Long universityId){
+        return new SuccessResponse<>(groupReadService.findGroupsInUniv(universityId));
     }
 }
