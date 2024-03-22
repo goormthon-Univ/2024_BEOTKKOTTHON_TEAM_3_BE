@@ -8,6 +8,7 @@ import com.univ.haksamo.jwt.TokenProvider;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
 import com.univ.haksamo.redis.RedisService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,6 +25,7 @@ import java.time.Duration;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class LoginService {
     private final JavaMailSender javaMailSender;
     private final RedisService redisService;
@@ -31,16 +33,6 @@ public class LoginService {
     private final UserRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
-
-    @Autowired
-    public LoginService(JavaMailSender javaMailSender, RedisService redisService, AuthenticationManagerBuilder authenticationManagerBuilder, UserRepository memberRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
-        this.javaMailSender = javaMailSender;
-        this.redisService = redisService;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.tokenProvider = tokenProvider;
-    }
 
     public void send(String email) {
         sendAuthnEmail(email);
