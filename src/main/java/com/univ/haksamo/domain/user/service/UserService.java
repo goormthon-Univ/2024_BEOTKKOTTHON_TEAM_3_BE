@@ -42,9 +42,9 @@ public class UserService {
         userRepository.save(User.toEntity(userDto, university));
     }
 
-    public UserPageDto findMe() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(authentication.getName())
+    public UserPageDto findMe(Long id) {
+//        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findById(id)
                 .orElseThrow(NotFoundUserException::new);
 
         return UserPageDto.toDTO(user, user.getUniversity().getName());
