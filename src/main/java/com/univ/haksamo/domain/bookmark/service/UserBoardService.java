@@ -9,6 +9,7 @@ import com.univ.haksamo.domain.bookmark.entity.UserBoard;
 import com.univ.haksamo.domain.bookmark.repository.UserBoardRepository;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.repository.UserRepository;
+import com.univ.haksamo.global.format.exception.user.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,12 +26,15 @@ public class UserBoardService {
 
 
     public ScrapBoardsDto findUserBoard(Long userId) {
-        List<UserBoard> userBoards = userBoardRepository.findAllByUserId(userId);
+        User user = userRepository.findById(userId).orElseThrow(NotFoundUserException::new);
+        List<UserBoard> userBoards = userBoardRepository.findAllByUserId(user.getId());
+
         List<BoardDto> scrapBoard = new ArrayList<>();
         for (UserBoard userBoard : userBoards) {
             Board board = userBoard.getBoard();
             scrapBoard.add(boardReadService.getBoard(board.getId()));
         }
+
         return ScrapBoardsDto.builder()
                 .scrapBoards(scrapBoard)
                 .build();
