@@ -36,13 +36,21 @@ public class MessageSender {
     public void sendMessageTo(String targetToken,String keywordName,Long boardId) throws IOException {
         System.out.println(targetToken);
         String message = makeMessage(targetToken, keywordName,boardId);
+        System.out.println("여기까진 됌5");
+
         OkHttpClient client = new OkHttpClient();
+        System.out.println("여기까진 됌6");
+
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json;charset=utf-8"));
+        System.out.println("여기까진 됌7");
+
         Request request = new Request.Builder()
                 .url(API_URI).post(requestBody)
                 .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
                 .addHeader(HttpHeaders.CONTENT_TYPE, "application/json;UTD-8")
                 .build();
+        System.out.println("여기까진 됌8");
+
         Response response = client.newCall(request).execute();
         System.out.println(request.body().toString());
     }
