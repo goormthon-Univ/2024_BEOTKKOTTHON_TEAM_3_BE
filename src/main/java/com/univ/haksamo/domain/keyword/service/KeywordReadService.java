@@ -15,34 +15,22 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class KeywordReadService {
-    private final KeywordRepository keywordRepository;
     private final UserKeywordRepository userKeywordRepository;
-
-    public List<Keyword> getKeywords() {
-        return keywordRepository.findAll();
-    }
 
     public UserKeywordsDto getUserKeywords(Long userId) {
         List<SelectedKeywordDTO> selectedKeywords = new ArrayList<>();
-        List<UserKeword> userKewords = userKeywordRepository.findAllByUserId(userId);
-        List<Keyword> keywords = getKeywords();
 
-        for (Keyword keyword : keywords) {
-            SelectedKeywordDTO selectedKeywordDTO = SelectedKeywordDTO.builder()
-                    .description(keyword.getDescription())
-                    .name(keyword.getName())
-                    .id(keyword.getId())
-                    .build();
-            selectedKeywords.add(selectedKeywordDTO);
-        }
+        List<UserKeword> userKewords = userKeywordRepository.findAllByUserId(userId);
 
         for (UserKeword userKeword : userKewords) {
-            for (SelectedKeywordDTO selectedKeyword : selectedKeywords) {
-                if (selectedKeyword.getId() == userKeword.getKeyword().getId()) {
-                    selectedKeyword.decideSelected(true);
-                    break;
-                }
-            }
+            Keyword keyword = userKeword.getKeyword();
+            boolean selected = userKeword.isSelected();
+            selectedKeywords.add(SelectedKeywordDTO.builder()
+                    .description(keyword.getDescription())
+                    .id(keyword.getId())
+                    .isSelected(selected)
+                    .name(keyword.getName())
+                    .build());
         }
 
         return UserKeywordsDto.builder()
