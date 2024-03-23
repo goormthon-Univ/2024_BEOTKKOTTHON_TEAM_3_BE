@@ -29,13 +29,9 @@ public class LoginController {
     @Operation(summary = "이메일로 인증번호 전송 api")
     @PostMapping("/haksamo/authn/email")
     @ResponseBody
-    public SuccessResponse<Boolean> sendAuthnMailController(@RequestBody EmailDTO emailDto) {
-        try {
-            loginService.send(emailDto);
-            return new SuccessResponse(true);
-        }catch (Exception e){
-            return new SuccessResponse(false);
-        }
+    public SuccessResponse<String> sendAuthnMailController(@RequestBody EmailDTO emailDto) {
+        loginService.send(emailDto);
+        return SuccessResponse.ok();
     }
 
     @Operation(summary = "인증번호 확인 api")
