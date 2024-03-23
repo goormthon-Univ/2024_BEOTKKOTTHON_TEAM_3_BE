@@ -7,6 +7,6 @@ import java.util.List;
 
 @Builder
 @Getter
-public class BoardsResponse {
+public class BoardListResponse {
     private List<BoardDto> boards;
 }
