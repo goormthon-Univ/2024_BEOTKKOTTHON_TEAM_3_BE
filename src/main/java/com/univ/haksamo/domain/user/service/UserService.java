@@ -29,14 +29,10 @@ public class UserService {
     }
 
     public void saveUser(UserDto userDto) {
-        String univName = userDto.getUnivName();
-        University university = universityRepository.findByName(univName);
+        Long univId = userDto.getUnivId();
+        University university = universityRepository.findById(univId).orElseThrow(()->new IllegalArgumentException());
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(User.toEntity(userDto, university));
-    }
-
-    public List<User> findAllUser() {
-        return userRepository.findAll();
     }
 
     public UserPageDto findMe() {
