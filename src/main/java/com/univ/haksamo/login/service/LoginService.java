@@ -78,7 +78,7 @@ public class LoginService {
 
     @Transactional
     public TokenDto login(UserLoginDto memberRequestDto) {
-        Duration duration = Duration.ofDays(1);
+        Duration duration = Duration.ofDays(7);
 
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
@@ -98,7 +98,7 @@ public class LoginService {
 
     @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
-        Duration duration = Duration.ofDays(1);
+        Duration duration = Duration.ofDays(7);
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
             throw new RuntimeException("Refresh Token 이 유효하지 않습니다.");
