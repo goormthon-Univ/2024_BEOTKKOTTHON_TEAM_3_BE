@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 
-public class EmailDto {
+public class EmailDTO {
     private String email;
 
     @JsonCreator
-    public EmailDto(String email) {
+    public EmailDTO(String email) {
         this.email = email;
     }
 }

@@ -1,18 +1,14 @@
 package com.univ.haksamo.login.service;
 
-import com.univ.haksamo.domain.user.dto.UserDto;
-import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.repository.UserRepository;
 import com.univ.haksamo.jwt.TokenDto;
 import com.univ.haksamo.jwt.TokenProvider;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
-import com.univ.haksamo.login.dto.EmailDto;
+import com.univ.haksamo.login.dto.EmailDTO;
 import com.univ.haksamo.login.dto.UserLoginDto;
 import com.univ.haksamo.redis.RedisService;
-import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -45,7 +41,7 @@ public class LoginService {
         this.tokenProvider = tokenProvider;
     }
 
-    public void send(EmailDto emailDto) {
+    public void send(EmailDTO emailDto) {
         sendAuthnEmail(emailDto.getEmail());
     }
   
