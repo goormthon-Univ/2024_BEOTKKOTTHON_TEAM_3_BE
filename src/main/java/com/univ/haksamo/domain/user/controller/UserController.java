@@ -36,14 +36,10 @@ public class UserController {
     @Operation(summary = "회원가입 api")
     @PostMapping("/haksamo/sign-up")
     @ResponseBody
-    public SuccessResponse<Boolean> signUpController(@Valid @RequestBody UserDto userDto){
-        try{
-            userService.saveUser(userDto);
-            return new SuccessResponse(true);
+    public SuccessResponse<String> signUpController(@Valid @RequestBody UserDto userDto){
+        userService.saveUser(userDto);
+        return SuccessResponse.ok();
 
-        } catch(Exception e) {
-            return new SuccessResponse(false);
-        }
     }
 
     @Operation(summary = "mypage api")
