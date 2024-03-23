@@ -15,4 +15,5 @@ public class Keyword extends BaseTimeEntity {
     @GeneratedValue
     private Long id;
     private String name;
+    private String description;
 }
