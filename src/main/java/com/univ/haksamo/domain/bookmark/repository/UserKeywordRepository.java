@@ -10,4 +10,6 @@ public interface UserKeywordRepository extends JpaRepository<UserKeword, Long> {
 
     List<UserKeword> findAllByKeywordId(Long keywordId);
 
+    UserKeword findAllByUserIdAndKeywordId(Long userId,Long keywordId);
+
 }

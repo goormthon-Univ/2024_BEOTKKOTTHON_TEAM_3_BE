@@ -22,4 +22,8 @@ public class UserKeword extends BaseTimeEntity {
     @ManyToOne
     @JoinColumn(name = "keywordId")
     private Keyword keyword;
+    private boolean selected;
+    public void changeSelect(boolean selected){
+        this.selected = selected;
+    }
 }
