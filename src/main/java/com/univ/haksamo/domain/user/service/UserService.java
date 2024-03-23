@@ -30,7 +30,7 @@ public class UserService {
 
     public void saveUser(UserDto userDto) {
         String univName = userDto.getUnivName();
-        University university = universityRepository.findByName(univName).get(0);
+        University university = universityRepository.findByName(univName);
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(User.toEntity(userDto, university));
     }
