@@ -1,18 +1,13 @@
 package com.univ.haksamo.domain.user.entity;
 
-import org.hibernate.annotations.Columns;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.univ.haksamo.domain.university.entity.University;
 import com.univ.haksamo.domain.user.dto.UserDto;
 import com.univ.haksamo.global.domain.BaseTimeEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,6 +47,10 @@ public class User extends BaseTimeEntity implements UserDetails {
                 .university(university)
                 .role(Role.ROLE_USER)
                 .build();
+    }
+
+    public void setUserFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.univ.haksamo.login.service;
 
+import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.repository.UserRepository;
 import com.univ.haksamo.jwt.TokenDto;
 import com.univ.haksamo.jwt.TokenProvider;
@@ -27,18 +28,17 @@ public class LoginService {
     private final JavaMailSender javaMailSender;
     private final RedisService redisService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final UserRepository memberRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
     private final TokenProvider tokenProvider;
 
+
     @Autowired
-    public LoginService(JavaMailSender javaMailSender, RedisService redisService, AuthenticationManagerBuilder authenticationManagerBuilder, UserRepository memberRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
+    public LoginService(JavaMailSender javaMailSender, RedisService redisService, AuthenticationManagerBuilder authenticationManagerBuilder, TokenProvider tokenProvider, UserRepository userRepository) {
         this.javaMailSender = javaMailSender;
         this.redisService = redisService;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.memberRepository = memberRepository;
-        this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
+        this.userRepository = userRepository;
     }
 
     public void send(EmailDTO emailDto) {
@@ -87,6 +87,11 @@ public class LoginService {
         //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        User user = userRepository.findByEmail(memberRequestDto.getEmail()).get();
+        user.setUserFcmToken(memberRequestDto.getFcmToken());
+        userRepository.save(user);
+
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
 
