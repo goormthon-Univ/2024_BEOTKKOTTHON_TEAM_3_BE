@@ -47,6 +47,7 @@ public class LoginService {
     public void send(EmailDto emailDto) {
         sendAuthnEmail(emailDto.getEmail());
     }
+  
     public boolean checkEmailAuthn(AuthnMailDto authnMailDto) {
         if(authnMailDto.getAuthnCode().equals(redisService.getValues(authnMailDto.getEmail()))){
             return true;
