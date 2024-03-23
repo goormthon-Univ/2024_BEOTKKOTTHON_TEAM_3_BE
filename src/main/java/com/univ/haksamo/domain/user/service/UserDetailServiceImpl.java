@@ -1,6 +1,7 @@
 package com.univ.haksamo.domain.user.service;
 
 import com.univ.haksamo.domain.user.repository.UserRepository;
+import com.univ.haksamo.global.format.exception.user.NotFoundUserException;
 import com.univ.haksamo.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,13 +27,13 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class UserDetailServiceImpl implements UserDetailsService {
 
-    @Autowired
     private final UserRepository memberRepository;
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return createUserDetails(memberRepository.findByEmail(username));
+    public UserDetails loadUserByUsername(String username) {
+        return createUserDetails(memberRepository.findByEmail(username)
+                .orElseThrow(NotFoundUserException::new));
 
     }
 

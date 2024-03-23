@@ -5,7 +5,9 @@ import com.univ.haksamo.domain.board.service.BoardWriteService;
 import com.univ.haksamo.global.format.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +26,7 @@ public class BoardWriteController {
     @PostMapping("/groups/{groupId}/boards")
     public SuccessResponse<String> write(@PathVariable Long groupId,
                                  @RequestPart List<MultipartFile> images,
-                                 @RequestPart WriteBoardRequestDto requestDto) throws IOException {
+                                 @Valid @RequestPart WriteBoardRequestDto requestDto) throws IOException {
         boardWriteService.writeBoard(groupId,images,requestDto);
         return SuccessResponse.ok();
     }

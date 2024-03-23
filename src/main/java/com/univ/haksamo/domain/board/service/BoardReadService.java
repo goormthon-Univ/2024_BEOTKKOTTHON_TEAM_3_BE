@@ -9,6 +9,7 @@ import com.univ.haksamo.domain.image.entity.Image;
 import com.univ.haksamo.domain.image.repository.ImageRepository;
 import com.univ.haksamo.domain.keyword.entity.Keyword;
 import com.univ.haksamo.domain.keyword.repository.KeywordRepository;
+import com.univ.haksamo.global.format.exception.board.NotFoundBoardException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +29,7 @@ public class BoardReadService {
 
     public BoardDto getBoard(Long boardId){
         Board board = boardJpaRepository.findById(boardId)
-                .orElseThrow(()->new IllegalArgumentException("없는 게시글"));
+                .orElseThrow(NotFoundBoardException::new);
         List<Image> imagesInBoard = imageRepository.findAllByBoardId(board.getId());
         List<String> imagesUrl = imagesInBoard.stream().map(image -> image.getUrl()).collect(Collectors.toList());
         return BoardDto.builder()

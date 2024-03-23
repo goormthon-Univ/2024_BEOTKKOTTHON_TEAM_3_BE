@@ -6,6 +6,7 @@ import com.univ.haksamo.domain.keyword.entity.Keyword;
 import com.univ.haksamo.domain.keyword.repository.KeywordRepository;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.repository.UserRepository;
+import com.univ.haksamo.global.format.exception.user.NotFoundUserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,9 +21,10 @@ public class UserKeywordService {
 
     public void FirstLoginSaveKeyword() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(authentication.getName());
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(NotFoundUserException::new);
 
-        if(userKeywordRepository.findAllByUserId(user.getId()).isEmpty()){
+        if (userKeywordRepository.findAllByUserId(user.getId()).isEmpty()) {
             for (Keyword keyword : keywordRepository.findAll()) {
                 UserKeword userKeword = UserKeword.builder()
                         .user(user)
