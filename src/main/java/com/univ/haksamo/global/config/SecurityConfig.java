@@ -36,8 +36,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-                                .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers("/haksamo/sign-up", "/haksamo/authn/**").permitAll()
+//                                .requestMatchers(PathRequest.toH2Console()).permitAll()
+                                .requestMatchers("/haksamo/sign-up", "/haksamo/authn/**","/h2-console/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .headers(headers -> headers
