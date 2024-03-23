@@ -3,9 +3,12 @@ package com.univ.haksamo.domain.user.service;
 import com.univ.haksamo.domain.university.entity.University;
 import com.univ.haksamo.domain.university.repository.UniversityRepository;
 import com.univ.haksamo.domain.user.dto.UserDto;
+import com.univ.haksamo.domain.user.dto.UserPageDto;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,14 @@ public class UserService {
     public List<User> findAllUser(){
         return userRepository.findAll();
     }
+
+    public UserPageDto findMe() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User user = userRepository.findByEmail(authentication.getName());
+
+        return UserPageDto.toDTO(user, user.getUniversity().getName());
+    }
+
 
 
 }

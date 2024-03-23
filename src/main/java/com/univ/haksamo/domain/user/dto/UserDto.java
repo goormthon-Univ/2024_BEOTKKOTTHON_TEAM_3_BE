@@ -5,11 +5,13 @@ import com.univ.haksamo.domain.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 @Getter
 @Builder
 @Setter
+@ToString
 public class UserDto {
     private Long id;
     private String univName;
