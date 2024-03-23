@@ -24,6 +24,6 @@ public class Board extends BaseTimeEntity {
     private String contents;
     private Long keywordId;
     @ManyToOne
-    @JoinColumn(name = "organId")
+    @JoinColumn(name = "groupId")
     private Group group;
 }
