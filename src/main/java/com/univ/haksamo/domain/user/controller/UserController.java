@@ -10,10 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "유저 정보 관련 api")
 @Controller
@@ -38,10 +35,10 @@ public class UserController {
     }
 
     @Operation(summary = "mypage api")
-    @GetMapping("/haksamo/my-page")
+    @GetMapping("/haksamo/{userId}")
     @ResponseBody
-    public SuccessResponse<UserPageDto> findMe() {
-        return new SuccessResponse(userService.findMe());
+    public SuccessResponse<UserPageDto> findMe(@PathVariable Long userId) {
+        return new SuccessResponse(userService.findMe(userId));
     }
 
 
