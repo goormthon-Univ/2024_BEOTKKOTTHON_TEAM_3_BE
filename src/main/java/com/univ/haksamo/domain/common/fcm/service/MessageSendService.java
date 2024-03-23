@@ -4,6 +4,7 @@ import com.univ.haksamo.domain.bookmark.entity.UserKeword;
 import com.univ.haksamo.domain.bookmark.repository.UserKeywordRepository;
 import com.univ.haksamo.domain.keyword.entity.Keyword;
 import com.univ.haksamo.domain.keyword.repository.KeywordRepository;
+import com.univ.haksamo.global.format.exception.userkeyword.NotFoundUserKeywordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class MessageSendService {
     @Async
     public void send(Long boardId,Long keywordId) throws IOException {
         Keyword keyword = keywordRepository.findById(keywordId)
-                .orElseThrow(() -> new IllegalArgumentException("키워드 없음"));
+                .orElseThrow(NotFoundUserKeywordException::new);
         List<UserKeword> userKewords = userKeywordRepository.findAllByKeywordId(keywordId);
         for (UserKeword userKeword : userKewords) {
             if(!userKeword.isSelected()){

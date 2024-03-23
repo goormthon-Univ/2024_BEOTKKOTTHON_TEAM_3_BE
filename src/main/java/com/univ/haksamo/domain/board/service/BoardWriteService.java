@@ -52,6 +52,7 @@ public class BoardWriteService {
                     .build());
         }
         imageRepository.saveAll(imageArr);
+        System.out.println("여기까진 됌");
         //키워드를 가진 사용자에게 알림
         messageSendService.send(board.getId(),requestDto.getKeywordId());
     }
