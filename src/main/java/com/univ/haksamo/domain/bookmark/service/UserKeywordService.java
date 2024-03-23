@@ -19,22 +19,19 @@ public class UserKeywordService {
     private final KeywordRepository keywordRepository;
     private final UserRepository userRepository;
 
-    public void FirstLoginSaveKeyword() {
+    public void saveUserKeyword() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = userRepository.findByEmail(authentication.getName())
                 .orElseThrow(NotFoundUserException::new);
 
-        if (userKeywordRepository.findAllByUserId(user.getId()).isEmpty()) {
-            for (Keyword keyword : keywordRepository.findAll()) {
-                UserKeword userKeword = UserKeword.builder()
-                        .user(user)
-                        .keyword(keyword)
-                        .selected(false)
-                        .build();
-                userKeywordRepository.save(userKeword);
-            }
+        for (Keyword keyword : keywordRepository.findAll()) {
+            UserKeword userKeword = UserKeword.builder()
+                    .user(user)
+                    .keyword(keyword)
+                    .selected(false)
+                    .build();
+            userKeywordRepository.save(userKeword);
         }
-
     }
 
 }
