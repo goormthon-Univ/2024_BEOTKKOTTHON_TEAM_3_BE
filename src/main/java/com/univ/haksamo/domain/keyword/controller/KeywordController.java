@@ -8,6 +8,7 @@ import com.univ.haksamo.domain.keyword.service.res.UserKeywordsDto;
 import com.univ.haksamo.global.format.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +29,7 @@ public class KeywordController {
 
     @PostMapping("/users/{userId}/keywords")
     public SuccessResponse<String> changeSelectKeywords(@PathVariable Long userId,
-                                                        @RequestBody ChangeKeywordDto changeKeywordsDto) {
+                                                        @Valid @RequestBody ChangeKeywordDto changeKeywordsDto) {
         keywordWriteService.changeSelect(ChangeKeywordRequest.builder()
                 .changeKeywords(changeKeywordsDto.getChangeKeywords())
                 .userId(userId)

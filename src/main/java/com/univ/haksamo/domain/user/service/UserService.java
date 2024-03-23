@@ -6,6 +6,7 @@ import com.univ.haksamo.domain.user.dto.UserDto;
 import com.univ.haksamo.domain.user.dto.UserPageDto;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.repository.UserRepository;
+import com.univ.haksamo.global.format.exception.user.NotFoundUserException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,30 +22,30 @@ public class UserService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    public  UserService(UserRepository userRepository, UniversityRepository universityRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, UniversityRepository universityRepository, BCryptPasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.universityRepository = universityRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void saveUser(UserDto userDto){
+    public void saveUser(UserDto userDto) {
         String univName = userDto.getUnivName();
         University university = universityRepository.findByName(univName).get(0);
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userRepository.save(User.toEntity(userDto, university));
     }
 
-    public List<User> findAllUser(){
+    public List<User> findAllUser() {
         return userRepository.findAll();
     }
 
     public UserPageDto findMe() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(authentication.getName());
+        User user = userRepository.findByEmail(authentication.getName())
+                .orElseThrow(NotFoundUserException::new);
 
         return UserPageDto.toDTO(user, user.getUniversity().getName());
     }
-
 
 
 }

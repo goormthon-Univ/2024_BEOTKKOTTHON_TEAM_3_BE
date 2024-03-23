@@ -8,6 +8,7 @@ import com.univ.haksamo.domain.user.service.UserService;
 import com.univ.haksamo.global.format.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -35,7 +36,7 @@ public class UserController {
     @Operation(summary = "회원가입 api")
     @PostMapping("/haksamo/sign-up")
     @ResponseBody
-    public SuccessResponse<Boolean> signUpController(@RequestBody UserDto userDto){
+    public SuccessResponse<Boolean> signUpController(@Valid @RequestBody UserDto userDto){
         try{
             userService.saveUser(userDto);
             return new SuccessResponse(true);
