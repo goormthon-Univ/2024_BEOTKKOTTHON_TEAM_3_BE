@@ -21,7 +21,7 @@ public class UserGroupService {
 
     public void saveFavoriteGroup(FavoriteGroup favoriteGroup){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(authentication.getName());
+        User user = userRepository.findByEmail(authentication.getName()).get();
 
         Group group = groupJpaRepository.findAllByName(favoriteGroup.getName());
         UserGroup userGroup = UserGroup.builder()
@@ -34,7 +34,7 @@ public class UserGroupService {
 
     public void deleteFavoriteGroup(FavoriteGroup favoriteGroup){
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User user = userRepository.findByEmail(authentication.getName());
+        User user = userRepository.findByEmail(authentication.getName()).get();
 
         Group group = groupJpaRepository.findAllByName(favoriteGroup.getName());
         UserGroup userGroup = userGroupRespository.findByUserIdAndGroupId(user.getId(), group.getId());
