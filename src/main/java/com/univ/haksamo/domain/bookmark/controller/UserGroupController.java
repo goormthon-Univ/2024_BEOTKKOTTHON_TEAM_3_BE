@@ -1,7 +1,7 @@
 package com.univ.haksamo.domain.bookmark.controller;
 
 import com.univ.haksamo.domain.bookmark.service.UserGroupService;
-import com.univ.haksamo.domain.group.controller.res.FavoriteGroup;
+import com.univ.haksamo.domain.bookmark.dto.FavoriteGroupDto;
 import com.univ.haksamo.global.format.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -19,15 +19,15 @@ public class UserGroupController {
 
     @Operation(summary = "학과 즐겨찾기 추가 api")
     @PostMapping("/users/favorite/groups")
-    public SuccessResponse<String> userFavoriteGroups(@RequestBody FavoriteGroup favoriteGroup){
-        userGroupService.saveFavoriteGroup(favoriteGroup);
+    public SuccessResponse<String> userFavoriteGroups(@RequestBody FavoriteGroupDto favoriteGroupDto){
+        userGroupService.saveFavoriteGroup(favoriteGroupDto);
         return SuccessResponse.ok();
     }
 
     @Operation(summary = "학과 즐겨찾기 취소 api")
     @DeleteMapping("/users/favorite/groups")
-    public SuccessResponse<String> deleteUserFavoriteGroups(@RequestBody FavoriteGroup favoriteGroup){
-        userGroupService.deleteFavoriteGroup(favoriteGroup);
+    public SuccessResponse<String> deleteUserFavoriteGroups(@RequestBody FavoriteGroupDto favoriteGroupDto){
+        userGroupService.deleteFavoriteGroup(favoriteGroupDto);
         return SuccessResponse.ok();
     }
 
