@@ -5,6 +5,8 @@ import com.univ.haksamo.domain.user.dto.UserDto;
 import com.univ.haksamo.domain.user.dto.UserPageDto;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+@Tag(name = "유저 정보 관련 api")
 @Controller
 public class UserController {
 
@@ -28,6 +31,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "회원가입 api")
     @PostMapping("/haksamo/sign-up")
     @ResponseBody
     public boolean signUpController(@RequestBody UserDto userDto){
@@ -39,6 +43,7 @@ public class UserController {
         }
     }
 
+    @Operation(summary = "mypage api")
     @GetMapping("/haksamo/my-page")
     @ResponseBody
     public ResponseEntity<UserPageDto> findMe() {
