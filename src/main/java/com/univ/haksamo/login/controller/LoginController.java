@@ -4,6 +4,7 @@ import com.univ.haksamo.domain.user.dto.UserDto;
 import com.univ.haksamo.jwt.TokenDto;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
+import com.univ.haksamo.login.dto.EmailDto;
 import com.univ.haksamo.login.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,13 @@ public class LoginController {
 
     @PostMapping("/haksamo/authn/email")
     @ResponseBody
-    public void sendAuthnMailController(@RequestBody Map<String, String> email) {
-        loginService.send(email.get("email"));
+    public boolean sendAuthnMailController(@RequestBody EmailDto emailDto) {
+        try {
+            loginService.send(emailDto);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     @PostMapping("/haksamo/authn/email/check")
