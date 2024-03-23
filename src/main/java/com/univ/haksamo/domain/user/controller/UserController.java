@@ -28,8 +28,14 @@ public class UserController {
 
 
     @PostMapping("/haksamo/sign-up")
-    public void signUpController(@RequestBody UserDto userDto){
-        userService.saveUser(userDto);
+    @ResponseBody
+    public boolean signUpController(@RequestBody UserDto userDto){
+        try{
+            userService.saveUser(userDto);
+            return true;
+        } catch(Exception e) {
+            return false;
+        }
     }
 
     @GetMapping("/haksamo/users")
