@@ -17,8 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 @ToString
 public class UserDto {
 
-    @NotBlank(message = "학교를 선택해주세요")
-    private String univName;
+    private Long univId;
     @NotBlank(message = "이름을 입력해주세요")
     private String name;
     @Email
@@ -30,8 +29,8 @@ public class UserDto {
     @NotBlank(message = "비밀번호를 입력해주세요")
     private String password;
 
-    public UserDto( String univName, String name, String email, String major, String password) {
-        this.univName = univName;
+    public UserDto(Long univName, String name, String email, String major, String password) {
+        this.univId = univName;
         this.name = name;
         this.email = email;
         this.major = major;
