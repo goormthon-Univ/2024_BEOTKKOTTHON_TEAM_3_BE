@@ -5,6 +5,7 @@ import com.univ.haksamo.jwt.TokenDto;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
 import com.univ.haksamo.login.dto.EmailDto;
+import com.univ.haksamo.login.dto.UserLoginDto;
 import com.univ.haksamo.login.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +45,8 @@ public class LoginController {
 
     @PostMapping("/haksamo/authn/login")
     @ResponseBody
-    public ResponseEntity<TokenDto> login(@RequestBody UserDto userDto) {
-        return ResponseEntity.ok(loginService.login(userDto));
+    public ResponseEntity<TokenDto> login(@RequestBody UserLoginDto userLoginDto) {
+        return ResponseEntity.ok(loginService.login(userLoginDto));
     }
 
     @PostMapping("/haksamo/authn/reissue")
