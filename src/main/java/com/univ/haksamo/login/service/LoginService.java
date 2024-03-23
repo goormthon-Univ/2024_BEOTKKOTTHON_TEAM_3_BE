@@ -8,6 +8,7 @@ import com.univ.haksamo.jwt.TokenProvider;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
 import com.univ.haksamo.login.dto.EmailDto;
+import com.univ.haksamo.login.dto.UserLoginDto;
 import com.univ.haksamo.redis.RedisService;
 import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class LoginService {
     }
 
     @Transactional
-    public TokenDto login(UserDto memberRequestDto) {
+    public TokenDto login(UserLoginDto memberRequestDto) {
         Duration duration = Duration.ofDays(1);
 
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성

@@ -41,8 +41,4 @@ public class UserDto {
                 .univName(univName)
                 .build();
     }
-
-    public UsernamePasswordAuthenticationToken toAuthentication() {
-        return new UsernamePasswordAuthenticationToken(email, password);
-    }
 }
