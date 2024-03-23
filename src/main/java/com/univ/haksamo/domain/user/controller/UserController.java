@@ -5,6 +5,7 @@ import com.univ.haksamo.domain.user.dto.UserDto;
 import com.univ.haksamo.domain.user.dto.UserPageDto;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.service.UserService;
+import com.univ.haksamo.global.format.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,20 +35,21 @@ public class UserController {
     @Operation(summary = "회원가입 api")
     @PostMapping("/haksamo/sign-up")
     @ResponseBody
-    public boolean signUpController(@RequestBody UserDto userDto){
+    public SuccessResponse<Boolean> signUpController(@RequestBody UserDto userDto){
         try{
             userService.saveUser(userDto);
-            return true;
+            return new SuccessResponse(true);
+
         } catch(Exception e) {
-            return false;
+            return new SuccessResponse(false);
         }
     }
 
     @Operation(summary = "mypage api")
     @GetMapping("/haksamo/my-page")
     @ResponseBody
-    public ResponseEntity<UserPageDto> findMe() {
-        return ResponseEntity.ok(userService.findMe());
+    public SuccessResponse<UserPageDto> findMe() {
+        return new SuccessResponse(userService.findMe());
     }
 
 

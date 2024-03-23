@@ -38,8 +38,9 @@ public class GroupController {
 
     @Operation(summary = "학과 즐겨찾기 추가 api")
     @PostMapping("/users/favorite/groups")
-    public void userFavoriteGroups(@RequestBody List<FavoriteGroup> favoriteGroups){
+    public SuccessResponse<String> userFavoriteGroups(@RequestBody List<FavoriteGroup> favoriteGroups){
         groupWriteService.saveFavoriteGroups(favoriteGroups);
+        return SuccessResponse.ok();
     }
 
 }
