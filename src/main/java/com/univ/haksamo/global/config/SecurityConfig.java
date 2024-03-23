@@ -37,7 +37,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
                                 .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers("/haksamo/authn/**","/swagger-ui/**").permitAll()
+                                .requestMatchers("/haksamo/authn/**","/swagger-ui/**","/swagger-ui/**",
+                                        "/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .headers(headers -> headers

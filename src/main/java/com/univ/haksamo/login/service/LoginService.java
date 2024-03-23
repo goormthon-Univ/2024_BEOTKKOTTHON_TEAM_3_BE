@@ -7,6 +7,7 @@ import com.univ.haksamo.jwt.TokenDto;
 import com.univ.haksamo.jwt.TokenProvider;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
+import com.univ.haksamo.login.dto.EmailDto;
 import com.univ.haksamo.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +35,8 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
-    public void send(String email) {
-        sendAuthnEmail(email);
+    public void send(EmailDto emailDto) {
+        sendAuthnEmail(emailDto.getEmail());
     }
     public boolean checkEmailAuthn(AuthnMailDto authnMailDto) {
         if(authnMailDto.getAuthnCode().equals(redisService.getValues(authnMailDto.getEmail()))){
