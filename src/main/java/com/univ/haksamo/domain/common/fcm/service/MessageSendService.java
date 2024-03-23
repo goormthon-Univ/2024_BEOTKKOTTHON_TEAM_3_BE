@@ -19,13 +19,16 @@ public class MessageSendService {
     private final KeywordRepository keywordRepository;
 
     @Async
-    public void send(Long keywordId) throws IOException {
+    public void send(Long boardId,Long keywordId) throws IOException {
         Keyword keyword = keywordRepository.findById(keywordId)
                 .orElseThrow(() -> new IllegalArgumentException("키워드 없음"));
         List<UserKeword> userKewords = userKeywordRepository.findAllByKeywordId(keywordId);
         for (UserKeword userKeword : userKewords) {
+            if(!userKeword.isSelected()){
+                continue;
+            }
             String userFcmToken = userKeword.getUser().getFcmToken();
-            messageSender.sendMessageTo(userFcmToken,keyword.getName());
+            messageSender.sendMessageTo(userFcmToken,keyword.getName(),boardId);
         }
     }
 }

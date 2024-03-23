@@ -53,6 +53,6 @@ public class BoardWriteService {
         }
         imageRepository.saveAll(imageArr);
         //키워드를 가진 사용자에게 알림
-        messageSendService.send(requestDto.getKeywordId());
+        messageSendService.send(board.getId(),requestDto.getKeywordId());
     }
 }

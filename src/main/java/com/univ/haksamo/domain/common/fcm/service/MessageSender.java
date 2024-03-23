@@ -13,7 +13,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -31,8 +33,9 @@ public class MessageSender {
      * @param keywordName 새로운 글의 키워드명
      * @throws IOException
      */
-    public void sendMessageTo(String targetToken,String keywordName) throws IOException {
-        String message = makeMessage(targetToken, keywordName);
+    public void sendMessageTo(String targetToken,String keywordName,Long boardId) throws IOException {
+        System.out.println(targetToken);
+        String message = makeMessage(targetToken, keywordName,boardId);
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json;charset=utf-8"));
         Request request = new Request.Builder()
@@ -44,7 +47,7 @@ public class MessageSender {
         System.out.println(request.body().toString());
     }
 
-    private String makeMessage(String targetToken, String keyword) throws JsonParseException, JsonProcessingException {
+    private String makeMessage(String targetToken, String keyword,Long boardId) throws JsonParseException, JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
                         .token(targetToken)

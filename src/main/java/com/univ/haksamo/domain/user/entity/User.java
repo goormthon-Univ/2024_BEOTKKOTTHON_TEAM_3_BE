@@ -1,5 +1,6 @@
 package com.univ.haksamo.domain.user.entity;
 
+import org.hibernate.annotations.Columns;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,7 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class  User extends BaseTimeEntity implements UserDetails {
+public class User extends BaseTimeEntity implements UserDetails {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
@@ -38,8 +39,7 @@ public class  User extends BaseTimeEntity implements UserDetails {
     private String email;
 
     private String major;
-
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
     private Role role;
     private String password;
 
