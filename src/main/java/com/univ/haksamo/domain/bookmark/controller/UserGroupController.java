@@ -6,10 +6,7 @@ import com.univ.haksamo.global.format.success.SuccessResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "학과 즐겨찾기 관련 api")
 @RestController
@@ -18,16 +15,16 @@ public class UserGroupController {
     private final UserGroupService userGroupService;
 
     @Operation(summary = "학과 즐겨찾기 추가 api")
-    @PostMapping("/users/favorite/groups")
-    public SuccessResponse<String> userFavoriteGroups(@RequestBody FavoriteGroupDto favoriteGroupDto){
-        userGroupService.saveFavoriteGroup(favoriteGroupDto);
+    @PostMapping("/users/{userId}/favorite/groups")
+    public SuccessResponse<String> userFavoriteGroups(@PathVariable Long userId, @RequestBody FavoriteGroupDto favoriteGroupDto){
+        userGroupService.saveFavoriteGroup(userId, favoriteGroupDto);
         return SuccessResponse.ok();
     }
 
     @Operation(summary = "학과 즐겨찾기 취소 api")
-    @DeleteMapping("/users/favorite/groups")
-    public SuccessResponse<String> deleteUserFavoriteGroups(@RequestBody FavoriteGroupDto favoriteGroupDto){
-        userGroupService.deleteFavoriteGroup(favoriteGroupDto);
+    @DeleteMapping("/users/{userId}/favorite/groups")
+    public SuccessResponse<String> deleteUserFavoriteGroups(@PathVariable Long userId, @RequestBody FavoriteGroupDto favoriteGroupDto){
+        userGroupService.deleteFavoriteGroup(userId, favoriteGroupDto);
         return SuccessResponse.ok();
     }
 
