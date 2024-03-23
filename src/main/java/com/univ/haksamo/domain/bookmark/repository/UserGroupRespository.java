@@ -12,4 +12,5 @@ import java.util.Optional;
 public interface UserGroupRespository extends JpaRepository<UserGroup,Long> {
     @Query(value = "select UG from UserGroup as UG join fetch UG.group where UG.user.id = :userId")
     List<UserGroup> findByUserId(Long userId);
+
 }
