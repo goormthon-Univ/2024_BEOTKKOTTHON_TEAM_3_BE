@@ -2,7 +2,7 @@ package com.univ.haksamo.login.service;
 
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.repository.UserRepository;
-import com.univ.haksamo.jwt.TokenDto;
+import com.univ.haksamo.jwt.UserTokenDto;
 import com.univ.haksamo.jwt.TokenProvider;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
@@ -16,7 +16,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -76,8 +75,9 @@ public class LoginService {
         return key.toString();
     }
 
+
     @Transactional
-    public TokenDto login(UserLoginDto memberRequestDto) {
+    public UserTokenDto login(UserLoginDto memberRequestDto) {
         Duration duration = Duration.ofDays(7);
 
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
@@ -93,16 +93,16 @@ public class LoginService {
         userRepository.save(user);
 
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        UserTokenDto userTokenDto = tokenProvider.generateTokenDto(authentication, user.getId());
 
         // 4. RefreshToken 저장
-        redisService.setValues(authentication.getName(), tokenDto.getRefreshToken(), duration);
+        redisService.setValues(authentication.getName(), userTokenDto.getRefreshToken(), duration);
         // 5. 토큰 발급
-        return tokenDto;
+        return userTokenDto;
     }
 
     @Transactional
-    public TokenDto reissue(TokenRequestDto tokenRequestDto) {
+    public UserTokenDto reissue(TokenRequestDto tokenRequestDto) {
         Duration duration = Duration.ofDays(7);
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
@@ -119,13 +119,14 @@ public class LoginService {
             throw new RuntimeException("토큰의 유저 정보가 일치하지 않습니다.");
         }
 
+        User user = userRepository.findByEmail(authentication.getName()).get();
         // 5. 새로운 토큰 생성
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        UserTokenDto userTokenDto = tokenProvider.generateTokenDto(authentication, user.getId());
 
         // 6. 저장소 정보 업데이트
-        redisService.setValues(authentication.getName(),tokenDto.getRefreshToken(),duration);
+        redisService.setValues(authentication.getName(), userTokenDto.getRefreshToken(),duration);
 
         // 토큰 발급
-        return tokenDto;
+        return userTokenDto;
     }
 }

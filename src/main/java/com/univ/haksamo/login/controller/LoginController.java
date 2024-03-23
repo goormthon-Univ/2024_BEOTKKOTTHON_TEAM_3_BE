@@ -1,7 +1,7 @@
 package com.univ.haksamo.login.controller;
 
 import com.univ.haksamo.global.format.success.SuccessResponse;
-import com.univ.haksamo.jwt.TokenDto;
+import com.univ.haksamo.jwt.UserTokenDto;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
 import com.univ.haksamo.login.dto.EmailDTO;
@@ -10,7 +10,6 @@ import com.univ.haksamo.login.service.LoginService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,14 +43,14 @@ public class LoginController {
     @Operation(summary = "로그인 api")
     @PostMapping("/haksamo/authn/login")
     @ResponseBody
-    public SuccessResponse<TokenDto> login(@RequestBody UserLoginDto userLoginDto) {
+    public SuccessResponse<UserTokenDto> login(@RequestBody UserLoginDto userLoginDto) {
         return new SuccessResponse(loginService.login(userLoginDto));
     }
 
     @Operation(summary = "엑세스 토큰 재발급 api")
     @PostMapping("/haksamo/authn/reissue")
     @ResponseBody
-    public SuccessResponse<TokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
+    public SuccessResponse<UserTokenDto> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return new SuccessResponse(loginService.reissue(tokenRequestDto));
     }
 
