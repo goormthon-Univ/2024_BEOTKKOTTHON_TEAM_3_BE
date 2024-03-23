@@ -36,9 +36,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests
-                                .requestMatchers(PathRequest.toH2Console()).permitAll()
-                                .requestMatchers("/haksamo/authn/**","/swagger-ui/**","/swagger-ui/**",
-                                        "/v3/api-docs/**").permitAll()
+//                                .requestMatchers(PathRequest.toH2Console()).permitAll()
+                                .requestMatchers("/haksamo/sign-up", "/haksamo/authn/**","/h2-console/**","/swagger-ui/**",
+                                        "/swagger-resources/**", "/v3/api-docs/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .headers(headers -> headers

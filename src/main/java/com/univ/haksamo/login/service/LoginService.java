@@ -9,7 +9,7 @@ import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
 import com.univ.haksamo.login.dto.EmailDto;
 import com.univ.haksamo.redis.RedisService;
-import lombok.RequiredArgsConstructor;
+import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.mail.SimpleMailMessage;
@@ -26,7 +26,6 @@ import java.time.Duration;
 import java.util.Random;
 
 @Service
-@RequiredArgsConstructor
 public class LoginService {
     private final JavaMailSender javaMailSender;
     private final RedisService redisService;
@@ -35,9 +34,20 @@ public class LoginService {
     private final PasswordEncoder passwordEncoder;
     private final TokenProvider tokenProvider;
 
+    @Autowired
+    public LoginService(JavaMailSender javaMailSender, RedisService redisService, AuthenticationManagerBuilder authenticationManagerBuilder, UserRepository memberRepository, PasswordEncoder passwordEncoder, TokenProvider tokenProvider) {
+        this.javaMailSender = javaMailSender;
+        this.redisService = redisService;
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.memberRepository = memberRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenProvider = tokenProvider;
+    }
+
     public void send(EmailDto emailDto) {
         sendAuthnEmail(emailDto.getEmail());
     }
+  
     public boolean checkEmailAuthn(AuthnMailDto authnMailDto) {
         if(authnMailDto.getAuthnCode().equals(redisService.getValues(authnMailDto.getEmail()))){
             return true;
@@ -85,7 +95,6 @@ public class LoginService {
 
         // 4. RefreshToken 저장
         redisService.setValues(authentication.getName(), tokenDto.getRefreshToken(), duration);
-
         // 5. 토큰 발급
         return tokenDto;
     }
