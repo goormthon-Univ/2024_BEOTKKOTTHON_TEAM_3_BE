@@ -2,6 +2,7 @@ package com.univ.haksamo.domain.bookmark.controller;
 
 
 import com.univ.haksamo.domain.bookmark.service.UserKeywordService;
+import com.univ.haksamo.global.format.success.SuccessResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +15,9 @@ public class UserKeyWordController {
 
 
     @PostMapping("/haksamo/first/users/keywords")
-    public void FirstLoginKeywordController() {
+    public SuccessResponse<String> FirstLoginKeywordController() {
         userKeywordService.FirstLoginSaveKeyword();
+        return SuccessResponse.ok();
     }
 
 }
