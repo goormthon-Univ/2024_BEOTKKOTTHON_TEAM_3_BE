@@ -7,7 +7,9 @@ import com.univ.haksamo.jwt.TokenDto;
 import com.univ.haksamo.jwt.TokenProvider;
 import com.univ.haksamo.jwt.TokenRequestDto;
 import com.univ.haksamo.login.dto.AuthnMailDto;
+import com.univ.haksamo.login.dto.EmailDto;
 import com.univ.haksamo.redis.RedisService;
+import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.mail.SimpleMailMessage;
@@ -42,8 +44,8 @@ public class LoginService {
         this.tokenProvider = tokenProvider;
     }
 
-    public void send(String email) {
-        sendAuthnEmail(email);
+    public void send(EmailDto emailDto) {
+        sendAuthnEmail(emailDto.getEmail());
     }
     public boolean checkEmailAuthn(AuthnMailDto authnMailDto) {
         if(authnMailDto.getAuthnCode().equals(redisService.getValues(authnMailDto.getEmail()))){
@@ -92,7 +94,6 @@ public class LoginService {
 
         // 4. RefreshToken 저장
         redisService.setValues(authentication.getName(), tokenDto.getRefreshToken(), duration);
-
         // 5. 토큰 발급
         return tokenDto;
     }
