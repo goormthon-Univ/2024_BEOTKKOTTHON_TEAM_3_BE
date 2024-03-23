@@ -2,6 +2,7 @@ package com.univ.haksamo.domain.user.controller;
 
 
 import com.univ.haksamo.domain.user.dto.UserDto;
+import com.univ.haksamo.domain.user.dto.UserPageDto;
 import com.univ.haksamo.domain.user.entity.User;
 import com.univ.haksamo.domain.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,16 @@ public class UserController {
     }
 
 
-    @PostMapping("/haksamo/sign-up")
+    @PostMapping("/haksamo/authn/sign-up")
+    @ResponseBody
     public void signUpController(@RequestBody UserDto userDto){
         userService.saveUser(userDto);
     }
 
-    @GetMapping("/haksamo/users")
+    @GetMapping("/haksamo/my-page")
     @ResponseBody
-    public ResponseEntity<List<User>> findAllUser() {
-        return ResponseEntity.ok(userService.findAllUser());
+    public ResponseEntity<UserPageDto> findMe() {
+        return ResponseEntity.ok(userService.findMe());
     }
 
 
