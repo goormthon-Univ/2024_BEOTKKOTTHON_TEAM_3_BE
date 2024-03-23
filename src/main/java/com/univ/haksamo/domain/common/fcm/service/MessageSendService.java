@@ -23,12 +23,20 @@ public class MessageSendService {
     public void send(Long boardId,Long keywordId) throws IOException {
         Keyword keyword = keywordRepository.findById(keywordId)
                 .orElseThrow(NotFoundUserKeywordException::new);
+        System.out.println("여기까진 됌2");
+
         List<UserKeword> userKewords = userKeywordRepository.findAllByKeywordId(keywordId);
+        System.out.println("여기까진 됌3");
+
         for (UserKeword userKeword : userKewords) {
             if(!userKeword.isSelected()){
                 continue;
             }
+            System.out.println("여기까진 됌4");
+
             String userFcmToken = userKeword.getUser().getFcmToken();
+            System.out.println("여기까진 됌4");
+
             messageSender.sendMessageTo(userFcmToken,keyword.getName(),boardId);
         }
     }
