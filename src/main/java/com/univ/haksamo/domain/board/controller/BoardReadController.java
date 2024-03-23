@@ -21,4 +21,11 @@ public class BoardReadController {
         BoardsResponse boards = boardReadService.getBoards(lastBoardId, groupId);
         return new SuccessResponse(boards);
     }
+
+    @GetMapping("/boards/search")
+    public SuccessResponse<BoardsResponse> boardSearchList(@RequestParam String input){
+        System.out.println(input);
+        BoardsResponse boards = boardReadService.getBoardsByInput(input);
+        return new SuccessResponse(boards);
+    }
 }

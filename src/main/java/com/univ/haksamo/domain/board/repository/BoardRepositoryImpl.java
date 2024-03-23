@@ -27,4 +27,31 @@ public class BoardRepositoryImpl implements BoardCustomRepository{
                 .fetch();
 
     }
+
+    @Override
+    public List<Board> findAllByTitleInput(String input, int pageSize){
+        return jpaQueryFactory.select(board)
+                .from(board).where(board.title.contains(input))
+                .orderBy(board.createdDateTime.asc())
+                .limit(pageSize)
+                .fetch();
+    }
+
+    @Override
+    public List<Board> findAllByContentInput(String input, int pageSize){
+        return jpaQueryFactory.select(board)
+                .from(board).where(board.contents.contains(input))
+                .orderBy(board.createdDateTime.asc())
+                .limit(pageSize)
+                .fetch();
+    }
+
+    @Override
+    public List<Board> findAllByKeywordInput(Long input, int pageSize){
+        return jpaQueryFactory.select(board)
+                .from(board).where(board.keywordId.eq(input))
+                .orderBy(board.createdDateTime.asc())
+                .limit(pageSize)
+                .fetch();
+    }
 }

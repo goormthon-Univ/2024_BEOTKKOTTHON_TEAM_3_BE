@@ -44,7 +44,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
                 member.getPassword(),
                 Collections.singleton(grantedAuthority)
         );
-
         return user;
     }
 }
