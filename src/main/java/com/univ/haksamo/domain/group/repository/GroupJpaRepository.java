@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface GroupJpaRepository extends JpaRepository<Group,Long> {
+
     List<Group> findAllByUniversityId(Long universityId);
     Group findByName(String name);
 }
